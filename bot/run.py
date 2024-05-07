@@ -82,14 +82,13 @@ async def command_reset_handler(message: Message) -> None:
 async def command_get_context_handler(message: Message) -> None:
     if message.from_user.id in allowed_ids:
         if message.from_user.id in ACTIVE_CHATS:
-            msg_len = len(ACTIVE_CHATS.get(message.chat.id)["messages"])
             messages = ACTIVE_CHATS.get(message.chat.id)["messages"]
             context = ""
             for msg in messages:
                 context += f"*{msg['role'].capitalize()}*: {msg['content']}\n"
             await bot.send_message(
                 chat_id=message.chat.id,
-                text=context+"\n\n*Message length:* "+msg_len,
+                text=context,
                 parse_mode=ParseMode.MARKDOWN,
             )
         else:
@@ -290,6 +289,7 @@ async def ollama_request(message: types.Message, prompt: str = None):
 async def main():
     await bot.set_my_commands(commands)
     await dp.start_polling(bot, skip_update=True)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
