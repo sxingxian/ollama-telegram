@@ -15,6 +15,7 @@ admin_ids = list(map(int, os.getenv("ADMIN_IDS", "").split(",")))
 ollama_base_url = os.getenv("OLLAMA_BASE_URL")
 ollama_port = os.getenv("OLLAMA_PORT", "11434")
 log_level_str = os.getenv("LOG_LEVEL", "INFO")
+reset_threshold = os.getenv("RESET_THRESHOLD","1")
 
 # --- Other
 log_levels = list(logging._levelToName.values())
@@ -68,11 +69,11 @@ def perms_allowed(func):
             if message:
                 if message and message.chat.type in ["supergroup", "group"]:
                     return
-                await message.answer("Access Denied")
+                await message.answer("Access denied; please get access from bot admin.")
             elif query:
                 if message and message.chat.type in ["supergroup", "group"]:
                     return
-                await query.answer("Access Denied")
+                await query.answer("Access denied; please get access from bot admin.")
 
     return wrapper
 
@@ -90,14 +91,14 @@ def perms_admins(func):
             if message:
                 if message and message.chat.type in ["supergroup", "group"]:
                     return
-                await message.answer("Access Denied")
+                await message.answer("Access denied; please get access from bot admin.")
                 logging.info(
                     f"[MSG] {message.from_user.first_name} {message.from_user.last_name}({message.from_user.id}) is not allowed to use this bot."
                 )
             elif query:
                 if message and message.chat.type in ["supergroup", "group"]:
                     return
-                await query.answer("Access Denied")
+                await query.answer("Access denied; please get access from bot admin.")
                 logging.info(
                     f"[QUERY] {message.from_user.first_name} {message.from_user.last_name}({message.from_user.id}) is not allowed to use this bot."
                 )
