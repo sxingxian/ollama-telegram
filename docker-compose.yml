@@ -1,15 +1,16 @@
 version: '3.8'
 services:
-  ollama-tg:
-    build: .
-    container_name: ollama-telegram-mod
+  ollama-telegram:
+    image: ruecat/ollama-telegram
+    container_name: ollama-telegram-x
     restart: always
     env_file:
       - stack.env
+      # this is meant for portainer. change to ./.env for docker
   
-  ollama-api:
+  ollama-server:
     image: ollama/ollama:latest
-    container_name: ollama-server-mod
+    container_name: ollama-server-x
     volumes:
       - ./ollama:/root/.ollama
     
