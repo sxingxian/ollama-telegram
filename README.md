@@ -22,12 +22,8 @@ Here's features that you get out of the box:
 - [x] Response streaming without ratelimit with **SentenceBySentence** method
 - [x] Mention [@] bot in group to receive answer
 
-## Roadmap
-- [x] Docker config & automated tags by [StanleyOneG](https://github.com/StanleyOneG), [ShrirajHegde](https://github.com/ShrirajHegde)
-- [x] History and `/reset` by [ShrirajHegde](https://github.com/ShrirajHegde)
-- [ ] Add more API-related functions [System Prompt Editor, Ollama Version fetcher, etc.]
-- [ ] Redis DB integration
-- [ ] Update bot UI
+## Roadmap/Updates
+- https://github.com/ruecat/ollama-telegram (latest update please get it from here)
 
 ## Prerequisites
 - [Telegram-Bot Token](https://core.telegram.org/bots#6-botfather)
