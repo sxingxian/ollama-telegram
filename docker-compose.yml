@@ -1,9 +1,8 @@
-# WORK IN PROGRESS
 version: '3.8'
 services:
   ollama-tg:
     build: .
-    container_name: ollama-tg-mod
+    container_name: ollama-telegram-mod
     restart: always
     env_file:
       - stack.env
