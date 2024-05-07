@@ -6,7 +6,7 @@ services:
     container_name: ollama-tg
     restart: on-failure
     env_file:
-      - ./.env
+      - stack.env
   
   ollama-api:
     image: ollama/ollama:latest
@@ -27,4 +27,4 @@ services:
 
     restart: always
     ports:
-      - '11434:11434'
+      - '11435:11435'
