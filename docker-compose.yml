@@ -3,14 +3,14 @@ version: '3.8'
 services:
   ollama-tg:
     build: .
-    container_name: ollama-tg
-    restart: on-failure
+    container_name: ollama-tg-mod
+    restart: always
     env_file:
       - stack.env
   
   ollama-api:
     image: ollama/ollama:latest
-    container_name: ollama-server
+    container_name: ollama-server-mod
     volumes:
       - ./ollama:/root/.ollama
     
