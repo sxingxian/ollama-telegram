@@ -291,19 +291,5 @@ async def main():
     await bot.set_my_commands(commands)
     await dp.start_polling(bot, skip_update=True)
 
-logging.info(f"Reeset starting for {message.from_user.first_name}")
-async def command_reset_threshold_handler(message: Message) -> None:
-    if message.from_user.id in allowed_ids:
-        if message.from_user.id in ACTIVE_CHATS:
-            logging.info(f"User permitted. Message length: "+len(ACTIVE_CHATS.get(message.chat.id)["messages"]) )
-            if len(ACTIVE_CHATS.get(message.chat.id)["messages"]) == reset_threshold:
-                async with ACTIVE_CHATS_LOCK:
-                    ACTIVE_CHATS.pop(message.from_user.id)
-                logging.info(f"Chat has been reset for {message.from_user.first_name}")
-                await bot.send_message(
-                    chat_id=message.chat.id,
-                    text="Threshold hit. Chat history will reset.",
-                )
-
 if __name__ == "__main__":
     asyncio.run(main())
