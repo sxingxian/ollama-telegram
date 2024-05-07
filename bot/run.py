@@ -82,13 +82,14 @@ async def command_reset_handler(message: Message) -> None:
 async def command_get_context_handler(message: Message) -> None:
     if message.from_user.id in allowed_ids:
         if message.from_user.id in ACTIVE_CHATS:
+            msg_len = len(ACTIVE_CHATS.get(message.chat.id)["messages"])
             messages = ACTIVE_CHATS.get(message.chat.id)["messages"]
             context = ""
             for msg in messages:
                 context += f"*{msg['role'].capitalize()}*: {msg['content']}\n"
             await bot.send_message(
                 chat_id=message.chat.id,
-                text=context,
+                text=context+"\n\n*Message length:* "+msg_len,
                 parse_mode=ParseMode.MARKDOWN,
             )
         else:
@@ -150,6 +151,20 @@ async def info_callback_handler(query: types.CallbackQuery):
 # React on message | LLM will respond on user's message or mention in groups
 @dp.message()
 @perms_allowed
+
+async def command_reset_threshold_handler(message: Message) -> None:
+    if message.from_user.id in allowed_ids:
+        if message.from_user.id in ACTIVE_CHATS:
+            if len(ACTIVE_CHATS.get(message.chat.id)["messages"]) == reset_threshold:
+                async with ACTIVE_CHATS_LOCK:
+                    ACTIVE_CHATS.pop(message.from_user.id)
+                logging.info(f"Chat has been reset for {message.from_user.first_name}")
+                await bot.send_message(
+                    chat_id=message.chat.id,
+                    text="Threshold hit. Chat history will reset.",
+                )
+
+
 async def handle_message(message: types.Message):
     await get_bot_info()
     if message.chat.type == "private":
